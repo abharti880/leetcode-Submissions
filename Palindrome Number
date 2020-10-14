@@ -1,0 +1,27 @@
+/*This solution is without converting number to string */
+
+class Solution {
+public:
+    bool isPalindrome(uint x) {
+       unsigned int r, temp = x;
+       unsigned int sum =0;
+        if(x<0)
+        {
+            return false;
+        }
+        else
+        {
+        while(x>0)
+        {
+             r=x%10;    
+            sum=(sum*10)+r;    
+            x/=10;    
+            
+        }
+        if(temp  == sum)
+            return true;
+        else
+         return false;
+        }
+    }
+};
