@@ -1,0 +1,41 @@
+/* Dynamic Programming C++ implementation of LCS problem */
+#include<bits/stdc++.h>
+using namespace std;
+
+int max(int a, int b);
+int t[1001][1001];
+/* Returns length of LCS for X[0..m-1], Y[0..n-1] */
+int lcs( char *x, char *y, int m, int n )
+{
+	if(n == 0 || m == 0) return 0;
+	if(t[m][n] != -1) return t[m][n];
+    
+    if(x[m-1] == y[n-1])
+    t[m][n] = 1+lcs(x,y,m-1,n-1);
+    else
+    t[m][n] = max(lcs(x,y,n,m-1) , lcs(x,y,n-1,m));
+    
+    return t[m][n];
+}
+
+/* Utility function to get max of 2 integers */
+int max(int a, int b)
+{
+	return (a > b)? a : b;
+}
+
+// Driver Code
+int main()
+{
+	char X[] = "AGGTAB";
+	char Y[] = "GXTXAYB";
+	
+	int m = strlen(X);
+	int n = strlen(Y);
+	memset(t,-1,sizeof(t));
+	cout << "Length of LCS is "
+		<< lcs( X, Y, m, n );
+	
+	return 0;
+}
+
