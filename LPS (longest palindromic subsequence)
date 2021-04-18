@@ -31,7 +31,7 @@ using namespace std;
      int LPS(string s) {
         string a = s;
         reverse(a.begin(),a.end());
-        return (s.length()-lcs(s,a));
+        return (lcs(s,a));
     }
 int main() {
 	string X= "GEEKSFORGEEKS";
