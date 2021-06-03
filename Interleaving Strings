@@ -1,0 +1,38 @@
+class Solution {
+    unordered_map <string,bool> mem;
+    bool check(string s1, string s2, string s3, int l1, int l2, int l3, int p1, int p2, int p3)
+    {
+        //if p3 is at last then other two pointers should also be at their last positin because  l1+l2 = l3
+        if(p3 == l3)
+            return (p1 == l1 && p2 == l2)? true : false;
+        
+         string key = to_string(p1)+"*"+to_string(p2)+"*"+to_string(p3);
+        if(mem.find(key)!=mem.end())
+            return mem[key];
+        //if p1 is at last then checking for 2nd string that if(s2[p2] != s3[p3]) return false else proceed
+        if(p1 == l1)
+            return mem[key] = (s2[p2] == s3[p3])?check(s1,s2,s3,l1,l2,l3,p1,p2+1,p3+1):false;
+        //if p2 is at last then checking for 2nd string that if(s1[p1] != s3[p3]) return false else proceed
+        if(p2 == l2)
+            return mem[key] = (s1[p1] == s3[p3])?check(s1,s2,s3,l1,l2,l3,p1+1,p2,p3+1):false;
+        //third case is if both pointers are in middle then check for both string consecutively
+        bool first = false; bool second = false;
+        //checking if s1[p1] exists in s3 or not
+        if(s1[p1] == s3[p3])
+            first = check(s1,s2,s3,l1,l2,l3,p1+1,p2,p3+1);
+        //checking if s2[p2] exists in s3 or not
+        if(s2[p2] == s3[p3])
+            second = check(s1,s2,s3,l1,l2,l3,p1,p2+1,p3+1);
+        //return the result 
+        
+        return mem[key] = first or second;
+    }
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        int l1 = s1.size();
+        int l2 = s2.size();
+        int l3 = s3.size();
+        if(l1+l2 != l3)
+            return false;
+        return check(s1,s2,s3,l1,l2,l3,0,0,0);
+    }
